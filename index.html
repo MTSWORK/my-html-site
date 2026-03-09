@@ -1,1 +1,109 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>Calendar Widget</title>
 
+<style>
+
+body{
+font-family:Arial;
+text-align:center;
+}
+
+.calendar{
+width:100%;
+max-width:320px;
+margin:auto;
+}
+
+.header{
+font-size:20px;
+font-weight:bold;
+margin-bottom:10px;
+}
+
+.grid{
+display:grid;
+grid-template-columns:repeat(7,1fr);
+gap:5px;
+}
+
+.day{
+padding:8px;
+border-radius:6px;
+}
+
+.week{
+font-weight:bold;
+}
+
+.today{
+background:#3b82f6;
+color:white;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="calendar">
+
+<div class="header" id="monthYear"></div>
+
+<div class="grid" id="calendar"></div>
+
+</div>
+
+<script>
+
+const calendar = document.getElementById("calendar")
+const monthYear = document.getElementById("monthYear")
+
+const today = new Date()
+const year = today.getFullYear()
+const month = today.getMonth()
+
+const firstDay = new Date(year,month,1).getDay()
+const lastDate = new Date(year,month+1,0).getDate()
+
+const monthNames = [
+"1월","2월","3월","4월","5월","6월",
+"7월","8월","9월","10월","11월","12월"
+]
+
+monthYear.innerText = year + "년 " + monthNames[month]
+
+const week=["일","월","화","수","목","금","토"]
+
+week.forEach(d=>{
+let div=document.createElement("div")
+div.className="day week"
+div.innerText=d
+calendar.appendChild(div)
+})
+
+for(let i=0;i<firstDay;i++){
+let div=document.createElement("div")
+calendar.appendChild(div)
+}
+
+for(let i=1;i<=lastDate;i++){
+
+let div=document.createElement("div")
+div.className="day"
+div.innerText=i
+
+if(i===today.getDate()){
+div.classList.add("today")
+}
+
+calendar.appendChild(div)
+
+}
+
+</script>
+
+</body>
+</html>
